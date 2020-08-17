@@ -29,5 +29,14 @@ export default {
   data: () => ({
     drawerOpen: true,
   }),
+
+  beforeCreate() {
+    if (localStorage.getItem('store')) {
+      this.$store.commit('initializeStore', JSON.parse(localStorage.getItem('store')));
+    }
+    this.$store.subscribe((mutation, state) => {
+      localStorage.setItem('store', JSON.stringify(state));
+    });
+  },
 };
 </script>
