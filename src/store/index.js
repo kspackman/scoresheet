@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     players: [],
+    games: [],
   },
   mutations: {
     initializeStore(state, newState) {
@@ -18,6 +19,15 @@ export default new Vuex.Store({
       const index = state.players.indexOf(player);
       if (index >= 0) {
         state.players.splice(index, 1);
+      }
+    },
+    addGame(state, game) {
+      state.games.push(game);
+    },
+    deleteGame(state, game) {
+      const index = state.games.indexOf(game);
+      if (index >= 0) {
+        state.games.splice(index, 1);
       }
     },
   },

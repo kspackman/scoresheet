@@ -19,11 +19,12 @@
     </template>
     <template>
       <v-card>
-        <v-card-title>Add Player</v-card-title>
+        <v-card-title>Add Game</v-card-title>
         <v-form
           v-model="valid"
           ref="form"
-          @submit="addPlayer"
+          class="px-4 pb-4"
+          @submit="addGame"
         >
           <v-text-field
             v-model="name"
@@ -33,8 +34,21 @@
             maxlength="30"
             required
             :rules="nameRules"
-            class="px-4 pb-4"
           />
+          <v-divider class="my-1" />
+          <v-card-subtitle class="pt-0 pl-0">Rounds</v-card-subtitle>
+          <v-text-field
+            v-for="(round, index) in rounds"
+            :key="index"
+            v-model="round.name"
+            dense
+          />
+          <v-btn
+            icon
+            @click="addRound"
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
           <v-card-actions class="justify-end">
             <v-btn
               text
@@ -46,7 +60,7 @@
             <v-btn
               :disabled="!valid"
               color="primary"
-              @click="addPlayer"
+              @click="addGame"
             >
               Add
             </v-btn>
@@ -68,19 +82,24 @@ export default {
         (v) => !!v || 'Name is required',
         (v) => (v && v.length <= 30) || 'Name must be less than 30 characters',
       ],
+      rounds: [{ name: 'Points' }],
     };
   },
 
   methods: {
+    addRound() {
+      this.rounds.push({ name: '' });
+    },
     closeDialog() {
       this.name = '';
+      this.rounds = [{ name: 'Points' }];
       this.showDialog = false;
       setTimeout(() => {
         this.$refs.form.resetValidation();
-      }, 1000);
+      }, 200);
     },
-    addPlayer() {
-      this.$emit('add-player', this.name);
+    addGame() {
+      this.$emit('add-game', { name: this.name, rounds: this.rounds });
       this.closeDialog();
     },
     focus(val) {
