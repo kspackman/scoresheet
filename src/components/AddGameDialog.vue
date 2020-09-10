@@ -55,7 +55,7 @@
               color="primary"
               @click="closeDialog"
             >
-              Close
+              Cancel
             </v-btn>
             <v-btn
               :disabled="!valid"

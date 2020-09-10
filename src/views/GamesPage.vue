@@ -14,6 +14,16 @@
           </v-list-item-content>
           <v-list-item-action>
             <v-btn
+              class="create-play-btn"
+              icon
+              title="Create a play"
+              @click.stop="createPlay(game)"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </v-list-item-action>
+          <v-list-item-action>
+            <v-btn
               icon
               @click="deleteGame(game)"
             >
@@ -26,35 +36,52 @@
     </v-list>
     <AddGameDialog
       @add-game="addGame"
-     />
+    />
+    <CreatePlayDialog
+      v-model="showCreatePlayDialog"
+      :game="selectedGame"
+      @create-play="savePlay"
+    />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import AddGameDialog from '@/components/AddGameDialog.vue';
+import CreatePlayDialog from '@/components/CreatePlayDialog.vue';
 
 export default {
   name: 'GamesPage',
   components: {
     AddGameDialog,
+    CreatePlayDialog,
+  },
+  data() {
+    return {
+      showCreatePlayDialog: false,
+      selectedGame: {},
+    };
   },
   computed: {
-    nextId() {
-      const gameIds = this.games.map((game) => game.id);
-      return gameIds.length > 0 ? Math.max(...gameIds) + 1 : 1;
-    },
     ...mapState(['games']),
+    ...mapGetters(['nextGameId']),
   },
   methods: {
     addGame(game) {
       this.$store.commit('addGame', {
-        id: this.nextId,
+        id: this.nextGameId,
         ...game,
       });
     },
     deleteGame(game) {
       this.$store.commit('deleteGame', game);
+    },
+    createPlay(game) {
+      this.selectedGame = game;
+      this.showCreatePlayDialog = true;
+    },
+    savePlay(play) {
+      this.$store.commit('savePlay', play);
     },
   },
 };

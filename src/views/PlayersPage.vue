@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import AddPlayerDialog from '@/components/AddPlayerDialog.vue';
 
 export default {
@@ -39,16 +39,13 @@ export default {
     AddPlayerDialog,
   },
   computed: {
-    nextId() {
-      const playerIds = this.players.map((player) => player.id);
-      return playerIds.length > 0 ? Math.max(...playerIds) + 1 : 1;
-    },
     ...mapState(['players']),
+    ...mapGetters(['nextPlayerId']),
   },
   methods: {
     addPlayer(name) {
       this.$store.commit('addPlayer', {
-        id: this.nextId,
+        id: this.nextPlayerId,
         name,
       });
     },

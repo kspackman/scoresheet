@@ -3,10 +3,27 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+function nextId(array) {
+  const ids = array.map((instance) => instance.id);
+  return ids.length > 0 ? Math.max(...ids) + 1 : 1;
+}
+
 export default new Vuex.Store({
   state: {
     players: [],
     games: [],
+    plays: [],
+  },
+  getters: {
+    nextPlayerId(state) {
+      return nextId(state.players);
+    },
+    nextGameId(state) {
+      return nextId(state.games);
+    },
+    nextPlayId(state) {
+      return nextId(state.plays);
+    },
   },
   mutations: {
     initializeStore(state, newState) {
@@ -29,6 +46,9 @@ export default new Vuex.Store({
       if (index >= 0) {
         state.games.splice(index, 1);
       }
+    },
+    savePlay(state, play) {
+      state.plays.push(play);
     },
   },
   actions: {
