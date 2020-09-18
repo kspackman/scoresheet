@@ -10,6 +10,7 @@ function nextId(array) {
 
 export default new Vuex.Store({
   state: {
+    darkMode: false,
     players: [],
     games: [],
     plays: [],
@@ -23,6 +24,16 @@ export default new Vuex.Store({
     },
     nextPlayId(state) {
       return nextId(state.plays);
+    },
+    playerPlays(state) {
+      return (player) => {
+        console.log(player);
+        return state.plays
+          .filter((play) => Object.keys(play.players).includes(Number(player.id).toString()));
+      };
+    },
+    gamePlays(state) {
+      return (game) => state.plays.filter((play) => play.gameId === game.id);
     },
   },
   mutations: {
@@ -49,6 +60,9 @@ export default new Vuex.Store({
     },
     savePlay(state, play) {
       state.plays.push(play);
+    },
+    setDarkMode(state, darkMode) {
+      state.darkMode = darkMode;
     },
   },
   actions: {

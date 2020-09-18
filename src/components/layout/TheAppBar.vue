@@ -45,16 +45,19 @@ export default {
     },
   },
 
-  data() {
-    return {
-      darkMode: false,
-    };
-  },
-
-  watch: {
-    darkMode() {
-      this.$vuetify.theme.dark = this.darkMode;
+  computed: {
+    darkMode: {
+      get() {
+        return this.$store.state.darkMode;
+      },
+      set(val) {
+        this.$store.commit('setDarkMode', val);
+        this.$vuetify.theme.dark = val;
+      },
     },
+  },
+  created() {
+    this.$vuetify.theme.dark = this.darkMode;
   },
 };
 </script>

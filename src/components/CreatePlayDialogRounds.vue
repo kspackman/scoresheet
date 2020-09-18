@@ -28,7 +28,7 @@
               >
                 <div>
                   <v-text-field
-                    v-model="playerScores[player.id][index]"
+                    v-model.number="playerScores[player.id][index]"
                     type="number"
                     dense
                   />

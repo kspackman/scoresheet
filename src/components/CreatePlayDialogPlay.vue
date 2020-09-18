@@ -14,6 +14,7 @@
             :counter="30"
             maxlength="30"
             required
+            autofocus
             :rules="nameRules"
           />
           <v-select
@@ -68,14 +69,12 @@ export default {
   computed: {
     ...mapState(['players']),
   },
-  mounted() {
-    this.$refs.playName.focus();
-  },
   methods: {
     cancel() {
       this.$emit('cancel');
     },
     createPlay() {
+      this.play.playerIds = this.play.playerIds.map((id) => Number.parseInt(id, 10));
       this.$emit('create-play', this.play);
     },
   },

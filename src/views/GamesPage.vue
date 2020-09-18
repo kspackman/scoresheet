@@ -10,7 +10,12 @@
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>{{ game.name }}</v-list-item-title>
-            <v-list-item-subtitle>{{ game.rounds.length }} rounds</v-list-item-subtitle>
+            <v-list-item-subtitle>
+              Number of plays: {{ game.numberPlays }}
+            </v-list-item-subtitle>
+            <v-list-item-subtitle v-if="game.lastPlay">
+              Last play: {{ game.lastPlay }}
+            </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn
@@ -46,7 +51,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import AddGameDialog from '@/components/AddGameDialog.vue';
 import CreatePlayDialog from '@/components/CreatePlayDialog.vue';
 
@@ -63,8 +68,20 @@ export default {
     };
   },
   computed: {
-    ...mapState(['games']),
     ...mapGetters(['nextGameId']),
+    games() {
+      let { games } = this.$store.state;
+      games = games.map((game) => {
+        let plays = this.$store.getters.gamePlays(game) || [];
+        plays = [...plays].sort((a, b) => a.date - b.date);
+        return {
+          ...game,
+          numberPlays: plays.length,
+          lastPlay: plays.length > 0 ? new Date(plays[0].date).toDateString() : null,
+        };
+      });
+      return games;
+    },
   },
   methods: {
     addGame(game) {

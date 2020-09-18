@@ -72,6 +72,7 @@ export default {
         id: this.nextPlayId,
         gameId: this.game.id,
         players: playerScores,
+        date: new Date(),
       });
       this.closeDialog();
     },

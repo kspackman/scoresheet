@@ -10,6 +10,12 @@
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>{{ player.name }}</v-list-item-title>
+            <v-list-item-subtitle>
+              Number of plays: {{ player.numberPlays }}
+            </v-list-item-subtitle>
+            <v-list-item-subtitle v-if="player.lastPlay">
+              Last play: {{ player.lastPlay }}
+            </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-btn
@@ -30,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import AddPlayerDialog from '@/components/AddPlayerDialog.vue';
 
 export default {
@@ -39,8 +45,19 @@ export default {
     AddPlayerDialog,
   },
   computed: {
-    ...mapState(['players']),
     ...mapGetters(['nextPlayerId']),
+    players() {
+      return this.$store.state.players
+        .map((player) => {
+          let plays = this.$store.getters.playerPlays(player) || [];
+          plays = [...plays].sort((a, b) => a.date - b.date);
+          return {
+            ...player,
+            numberPlays: plays.length,
+            lastPlay: plays.length > 0 ? new Date(plays[0].date).toDateString() : null,
+          };
+        });
+    },
   },
   methods: {
     addPlayer(name) {
