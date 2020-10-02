@@ -2,7 +2,8 @@
   <v-dialog
     v-model="showDialog"
     width="300"
-    @input="focus"
+    v-hotkey:a="openDialog"
+    @input="closeDialog"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
@@ -34,6 +35,7 @@
             required
             :rules="nameRules"
             class="px-4 pb-4"
+            autofocus
           />
           <v-card-actions class="justify-end">
             <v-btn
@@ -72,23 +74,21 @@ export default {
   },
 
   methods: {
-    closeDialog() {
-      this.name = '';
-      this.showDialog = false;
-      setTimeout(() => {
-        this.$refs.form.resetValidation();
-      }, 1000);
+    closeDialog(val = false) {
+      if (!val) {
+        this.name = '';
+        this.showDialog = false;
+        setTimeout(() => {
+          this.$refs.form.resetValidation();
+        }, 200);
+      }
     },
     addPlayer() {
       this.$emit('add-player', this.name);
       this.closeDialog();
     },
-    focus(val) {
-      if (val) {
-        setTimeout(() => {
-          this.$refs.name.focus();
-        });
-      }
+    openDialog() {
+      this.showDialog = true;
     },
   },
 };

@@ -12,6 +12,7 @@
           <v-list-item
             link
             to="/"
+            v-hotkey:h
           >
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
@@ -23,6 +24,7 @@
           <v-list-item
             link
             to="/players"
+            v-hotkey:p
           >
             <v-list-item-icon>
               <v-icon>mdi-account-multiple</v-icon>
@@ -34,6 +36,7 @@
           <v-list-item
             link
             to="/games"
+            v-hotkey:g
           >
             <v-list-item-icon>
               <v-icon>mdi-checkerboard</v-icon>

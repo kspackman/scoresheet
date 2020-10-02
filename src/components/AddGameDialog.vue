@@ -2,7 +2,8 @@
   <v-dialog
     v-model="showDialog"
     width="300"
-    @input="focus"
+    v-hotkey:a="openDialog"
+    @input="closeDialog"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
@@ -34,6 +35,7 @@
             maxlength="30"
             required
             :rules="nameRules"
+            autofocus
           />
           <v-divider class="my-1" />
           <v-card-subtitle class="pt-0 pl-0">Rounds</v-card-subtitle>
@@ -83,6 +85,7 @@ export default {
         (v) => (v && v.length <= 30) || 'Name must be less than 30 characters',
       ],
       rounds: [{ name: 'Points' }],
+      open: false,
     };
   },
 
@@ -90,24 +93,22 @@ export default {
     addRound() {
       this.rounds.push({ name: '' });
     },
-    closeDialog() {
-      this.name = '';
-      this.rounds = [{ name: 'Points' }];
-      this.showDialog = false;
-      setTimeout(() => {
-        this.$refs.form.resetValidation();
-      }, 200);
+    closeDialog(val = false) {
+      if (!val) {
+        this.name = '';
+        this.rounds = [{ name: 'Points' }];
+        this.showDialog = false;
+        setTimeout(() => {
+          this.$refs.form.resetValidation();
+        }, 200);
+      }
     },
     addGame() {
       this.$emit('add-game', { name: this.name, rounds: this.rounds });
       this.closeDialog();
     },
-    focus(val) {
-      if (val) {
-        setTimeout(() => {
-          this.$refs.name.focus();
-        });
-      }
+    openDialog() {
+      this.showDialog = true;
     },
   },
 };

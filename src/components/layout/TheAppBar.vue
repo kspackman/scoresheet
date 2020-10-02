@@ -14,6 +14,7 @@
 
       <div class="d-flex align-center">
         <v-switch
+          v-hotkey:d="toggleDarkMode"
           v-model="darkMode"
           label="Dark Mode"
           hide-details
@@ -58,6 +59,11 @@ export default {
   },
   created() {
     this.$vuetify.theme.dark = this.darkMode;
+  },
+  methods: {
+    toggleDarkMode() {
+      this.darkMode = !this.darkMode;
+    },
   },
 };
 </script>
