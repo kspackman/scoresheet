@@ -41,7 +41,7 @@
             <v-btn
               text
               color="primary"
-              @click="closeDialog"
+              @click="closeDialog(false)"
             >
               Cancel
             </v-btn>
