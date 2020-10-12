@@ -9,7 +9,9 @@
     />
 
     <v-main>
-      <router-view />
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
     </v-main>
   </v-app>
 </template>
@@ -40,3 +42,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .3s ease;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter {
+  opacity: 0;
+}
+</style>

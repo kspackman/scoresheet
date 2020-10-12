@@ -39,9 +39,7 @@
         <v-divider :key="'d' + index" />
       </template>
     </v-list>
-    <AddGameDialog
-      @add-game="addGame"
-    />
+    <AddGameDialog @add-game="addGame" />
     <CreatePlayDialog
       v-if="showCreatePlayDialog"
       v-model="showCreatePlayDialog"

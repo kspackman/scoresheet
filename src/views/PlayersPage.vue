@@ -29,9 +29,7 @@
         <v-divider :key="'d' + index" />
       </template>
     </v-list>
-    <AddPlayerDialog
-      @add-player="addPlayer"
-     />
+    <AddPlayerDialog @add-player="addPlayer" />
   </div>
 </template>
 
