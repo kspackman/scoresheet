@@ -78,8 +78,11 @@ export default {
     },
   },
   watch: {
-    value(val) {
-      this.showDialog = val;
+    value: {
+      handler(val) {
+        this.showDialog = val;
+      },
+      immediate: true,
     },
   },
 };

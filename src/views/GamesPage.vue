@@ -43,6 +43,7 @@
       @add-game="addGame"
     />
     <CreatePlayDialog
+      v-if="showCreatePlayDialog"
       v-model="showCreatePlayDialog"
       :game="selectedGame"
       @create-play="savePlay"
@@ -53,7 +54,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import AddGameDialog from '@/components/AddGameDialog.vue';
-import CreatePlayDialog from '@/components/CreatePlayDialog.vue';
+
+const CreatePlayDialog = () => import('@/components/CreatePlayDialog.vue');
 
 export default {
   name: 'GamesPage',
