@@ -1,6 +1,6 @@
 <template>
   <div class="players d-flex flex-column align-center mt-3">
-    <h1>Players</h1>
+    <PageHeader>Players</PageHeader>
     <v-list class="d-inline-block" style="min-width:300px;">
       <v-divider />
       <template v-for="(player, index) in players">
@@ -36,11 +36,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import AddPlayerDialog from '@/components/AddPlayerDialog.vue';
+import PageHeader from '@/components/generic/PageHeader.vue';
 
 export default {
   name: 'PlayersPage',
   components: {
     AddPlayerDialog,
+    PageHeader,
   },
   computed: {
     ...mapGetters(['nextPlayerId']),

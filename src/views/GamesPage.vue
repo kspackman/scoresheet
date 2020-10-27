@@ -1,6 +1,6 @@
 <template>
   <div class="games d-flex flex-column align-center mt-3">
-    <h1>Games</h1>
+    <PageHeader>Games</PageHeader>
     <v-list class="d-inline-block" style="min-width:300px;">
       <v-divider />
       <template v-for="(game, index) in games">
@@ -52,6 +52,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import AddGameDialog from '@/components/AddGameDialog.vue';
+import PageHeader from '@/components/generic/PageHeader.vue';
 
 const CreatePlayDialog = () => import('@/components/CreatePlayDialog.vue');
 
@@ -60,6 +61,7 @@ export default {
   components: {
     AddGameDialog,
     CreatePlayDialog,
+    PageHeader,
   },
   data() {
     return {
