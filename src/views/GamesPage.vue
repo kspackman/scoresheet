@@ -1,44 +1,44 @@
 <template>
   <div class="games d-flex flex-column align-center mt-3">
     <PageHeader>Games</PageHeader>
-    <v-list class="d-inline-block" style="min-width:300px;">
-      <v-divider />
+    <VList class="d-inline-block" style="min-width:300px;">
+      <VDivider />
       <template v-for="(game, index) in games">
-        <v-list-item :key="'g' + game.id">
-          <v-list-item-icon>
-            <v-icon>mdi-checkerboard</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ game.name }}</v-list-item-title>
-            <v-list-item-subtitle>
+        <VListItem :key="'g' + game.id">
+          <VListItemIcon>
+            <VIcon>mdi-checkerboard</VIcon>
+          </VListItemIcon>
+          <VListItemContent>
+            <VListItemTitle>{{ game.name }}</VListItemTitle>
+            <VListItemSubtitle>
               Number of plays: {{ game.numberPlays }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle v-if="game.lastPlay">
+            </VListItemSubtitle>
+            <VListItemSubtitle v-if="game.lastPlay">
               Last play: {{ game.lastPlay }}
-            </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-btn
+            </VListItemSubtitle>
+          </VListItemContent>
+          <VListItemAction>
+            <VBtn
               class="create-play-btn"
               icon
               title="Create a play"
               @click.stop="createPlay(game)"
             >
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-          </v-list-item-action>
-          <v-list-item-action>
-            <v-btn
+              <VIcon>mdi-plus</VIcon>
+            </VBtn>
+          </VListItemAction>
+          <VListItemAction>
+            <VBtn
               icon
               @click="deleteGame(game)"
             >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </v-list-item>
-        <v-divider :key="'d' + index" />
+              <VIcon>mdi-delete</VIcon>
+            </VBtn>
+          </VListItemAction>
+        </VListItem>
+        <VDivider :key="'d' + index" />
       </template>
-    </v-list>
+    </VList>
     <AddGameDialog @add-game="addGame" />
     <CreatePlayDialog
       v-if="showCreatePlayDialog"

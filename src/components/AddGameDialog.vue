@@ -1,12 +1,12 @@
 <template>
-  <v-dialog
+  <VDialog
     v-model="showDialog"
     width="300"
     v-hotkey:a="openDialog"
     @input="closeDialog"
   >
     <template v-slot:activator="{ on, attrs }">
-      <v-btn
+      <VBtn
         fab
         color="accent"
         v-bind="attrs"
@@ -15,19 +15,19 @@
         bottom
         v-on="on"
       >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+        <VIcon>mdi-plus</VIcon>
+      </VBtn>
     </template>
     <template>
-      <v-card>
-        <v-card-title>Add Game</v-card-title>
-        <v-form
+      <VCard>
+        <VCardTitle>Add Game</VCardTitle>
+        <VForm
           v-model="valid"
           ref="form"
           class="px-4 pb-4"
           @submit="addGame"
         >
-          <v-text-field
+          <VTextField
             v-model="name"
             ref="name"
             label="Name"
@@ -37,40 +37,40 @@
             :rules="nameRules"
             autofocus
           />
-          <v-divider class="my-1" />
-          <v-card-subtitle class="pt-0 pl-0">Rounds</v-card-subtitle>
-          <v-text-field
+          <VDivider class="my-1" />
+          <VCard-subtitle class="pt-0 pl-0">Rounds</VCard-subtitle>
+          <VTextField
             v-for="(round, index) in rounds"
             :key="index"
             v-model="round.name"
             dense
           />
-          <v-btn
+          <VBtn
             icon
             @click="addRound"
           >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-          <v-card-actions class="justify-end">
-            <v-btn
+            <VIcon>mdi-plus</VIcon>
+          </VBtn>
+          <VCard-actions class="justify-end">
+            <VBtn
               text
               color="primary"
               @click="closeDialog(false)"
             >
               Cancel
-            </v-btn>
-            <v-btn
+            </VBtn>
+            <VBtn
               :disabled="!valid"
               color="primary"
               @click="addGame"
             >
               Add
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
+            </VBtn>
+          </VCard-actions>
+        </VForm>
+      </VCard>
     </template>
-  </v-dialog>
+  </VDialog>
 </template>
 
 <script>

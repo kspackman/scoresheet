@@ -1,5 +1,5 @@
 <template>
-  <v-dialog
+  <VDialog
     v-model="showDialog"
     @input="$emit('input', $event)"
     :width="mode === Modes.PLAY ? '300px' : 'unset'"
@@ -18,7 +18,7 @@
         @create-play="createPlay"
       />
     </template>
-  </v-dialog>
+  </VDialog>
 </template>
 
 <script>

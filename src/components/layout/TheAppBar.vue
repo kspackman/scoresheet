@@ -1,30 +1,30 @@
 <template>
-    <v-app-bar
+    <VAppBar
       app
       :color="darkMode ? undefined : 'primary'"
       clipped-left
       dark
     >
       <div class="d-flex align-center">
-        <v-app-bar-nav-icon @click.stop="$emit('update:drawerOpen', !drawerOpen)" />
-        <v-toolbar-title class="ml-3">Scoresheet</v-toolbar-title>
+        <VAppBarNavIcon @click.stop="$emit('update:drawerOpen', !drawerOpen)" />
+        <VToolbarTitle class="ml-3">Scoresheet</VToolbarTitle>
       </div>
 
-      <v-spacer></v-spacer>
+      <VSpacer />
 
       <div class="d-flex align-center">
-        <v-switch
+        <VSwitch
           v-hotkey:d="toggleDarkMode"
           v-model="darkMode"
           label="Dark Mode"
           hide-details
           class="mr-5"
         />
-        <v-btn
+        <VBtn
           icon
           to="/"
         >
-          <v-img
+          <VImg
             alt="Scoresheet Logo"
             class="shrink mr-2"
             contain
@@ -32,9 +32,9 @@
             transition="scale-transition"
             width="40"
           />
-        </v-btn>
+        </VBtn>
       </div>
-    </v-app-bar>
+    </VAppBar>
 </template>
 
 <script>

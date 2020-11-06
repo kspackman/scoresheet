@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <VApp>
     <TheAppBar
       :drawer-open.sync="drawerOpen"
     />
@@ -8,12 +8,12 @@
       :drawer-open="drawerOpen"
     />
 
-    <v-main>
+    <VMain>
       <transition name="fade" mode="out-in">
         <router-view />
       </transition>
-    </v-main>
-  </v-app>
+    </VMain>
+  </VApp>
 </template>
 
 <script>

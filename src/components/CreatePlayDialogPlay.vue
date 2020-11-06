@@ -1,13 +1,13 @@
 <template>
-    <v-card width="300px">
-        <v-card-title>Create a Play</v-card-title>
-        <v-form
+    <VCard width="300px">
+        <VCardTitle>Create a Play</VCardTitle>
+        <VForm
           v-model="valid"
           ref="form"
           class="px-4 pb-4"
           @submit="createPlay"
         >
-          <v-text-field
+          <VTextField
             v-model="play.name"
             ref="playName"
             label="Play name"
@@ -17,7 +17,7 @@
             autofocus
             :rules="nameRules"
           />
-          <v-select
+          <VSelect
             v-model="play.playerIds"
             :items="players"
             label="Players"
@@ -26,24 +26,24 @@
             multiple
             :rules="playersRules"
           />
-          <v-card-actions class="justify-end">
-            <v-btn
+          <VCard-actions class="justify-end">
+            <VBtn
               text
               color="primary"
               @click="cancel"
             >
               Cancel
-            </v-btn>
-            <v-btn
+            </VBtn>
+            <VBtn
               :disabled="!valid"
               color="primary"
               @click="createPlay"
             >
               Next
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
+            </VBtn>
+          </VCard-actions>
+        </VForm>
+      </VCard>
 </template>
 
 <script>

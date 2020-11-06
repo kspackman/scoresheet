@@ -1,34 +1,34 @@
 <template>
   <div class="players d-flex flex-column align-center mt-3">
     <PageHeader>Players</PageHeader>
-    <v-list class="d-inline-block" style="min-width:300px;">
-      <v-divider />
+    <VList class="d-inline-block" style="min-width:300px;">
+      <VDivider />
       <template v-for="(player, index) in players">
-        <v-list-item :key="'p' + player.id">
-          <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ player.name }}</v-list-item-title>
-            <v-list-item-subtitle>
+        <VListItem :key="'p' + player.id">
+          <VListItemIcon>
+            <VIcon>mdi-account</VIcon>
+          </VListItemIcon>
+          <VListItemContent>
+            <VListItemTitle>{{ player.name }}</VListItemTitle>
+            <VListItemSubtitle>
               Number of plays: {{ player.numberPlays }}
-            </v-list-item-subtitle>
-            <v-list-item-subtitle v-if="player.lastPlay">
+            </VListItemSubtitle>
+            <VListItemSubtitle v-if="player.lastPlay">
               Last play: {{ player.lastPlay }}
-            </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-btn
+            </VListItemSubtitle>
+          </VListItemContent>
+          <VListItemAction>
+            <VBtn
               icon
               @click="deletePlayer(player)"
             >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </v-list-item>
-        <v-divider :key="'d' + index" />
+              <VIcon>mdi-delete</VIcon>
+            </VBtn>
+          </VListItemAction>
+        </VListItem>
+        <VDivider :key="'d' + index" />
       </template>
-    </v-list>
+    </VList>
     <AddPlayerDialog @add-player="addPlayer" />
   </div>
 </template>

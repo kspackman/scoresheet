@@ -1,12 +1,12 @@
 <template>
-  <v-dialog
+  <VDialog
     v-model="showDialog"
     width="300"
     v-hotkey:a="openDialog"
     @input="closeDialog"
   >
     <template v-slot:activator="{ on, attrs }">
-      <v-btn
+      <VBtn
         fab
         color="accent"
         v-bind="attrs"
@@ -15,18 +15,18 @@
         bottom
         v-on="on"
       >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+        <VIcon>mdi-plus</VIcon>
+      </VBtn>
     </template>
     <template>
-      <v-card>
-        <v-card-title>Add Player</v-card-title>
-        <v-form
+      <VCard>
+        <VCardTitle>Add Player</VCardTitle>
+        <VForm
           v-model="valid"
           ref="form"
           @submit="addPlayer"
         >
-          <v-text-field
+          <VTextField
             v-model="name"
             ref="name"
             label="Name"
@@ -37,26 +37,26 @@
             class="px-4 pb-4"
             autofocus
           />
-          <v-card-actions class="justify-end">
-            <v-btn
+          <VCard-actions class="justify-end">
+            <VBtn
               text
               color="primary"
               @click="closeDialog(false)"
             >
               Cancel
-            </v-btn>
-            <v-btn
+            </VBtn>
+            <VBtn
               :disabled="!valid"
               color="primary"
               @click="addPlayer"
             >
               Add
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
+            </VBtn>
+          </VCard-actions>
+        </VForm>
+      </VCard>
     </template>
-  </v-dialog>
+  </VDialog>
 </template>
 
 <script>

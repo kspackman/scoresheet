@@ -1,6 +1,6 @@
 <template>
-    <v-card>
-        <v-simple-table>
+    <VCard>
+        <VSimpleTable>
           <thead>
             <tr>
               <th>
@@ -27,7 +27,7 @@
                 class="input-td"
               >
                 <div>
-                  <v-text-field
+                  <VTextField
                     v-model.number="playerScores[player.id][index]"
                     type="number"
                     dense
@@ -36,23 +36,23 @@
               </td>
             </tr>
           </tbody>
-        </v-simple-table>
-        <v-card-actions class="justify-end">
-            <v-btn
+        </VSimpleTable>
+        <VCardActions class="justify-end">
+            <VBtn
               text
               color="primary"
               @click="cancel"
             >
               Cancel
-            </v-btn>
-            <v-btn
+            </VBtn>
+            <VBtn
               color="primary"
               @click="createPlay"
             >
               Done
-            </v-btn>
-          </v-card-actions>
-      </v-card>
+            </VBtn>
+          </VCardActions>
+      </VCard>
 </template>
 
 <script>

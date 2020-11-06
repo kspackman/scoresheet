@@ -1,52 +1,52 @@
 <template>
-    <v-navigation-drawer
+    <VNavigationDrawer
       v-model="drawerOpen"
       app
       clipped
       expand-on-hover
     >
-      <v-list
+      <VList
           dense
           nav
         >
-          <v-list-item
+          <VListItem
             link
             to="/"
             v-hotkey:h
           >
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Home</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
+            <VListItemIcon>
+              <VIcon>mdi-home</VIcon>
+            </VListItemIcon>
+            <VListItemContent>
+              <VListItemTitle>Home</VListItemTitle>
+            </VListItemContent>
+          </VListItem>
+          <VListItem
             link
             to="/players"
             v-hotkey:p
           >
-            <v-list-item-icon>
-              <v-icon>mdi-account-multiple</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Players</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
+            <VListItemIcon>
+              <VIcon>mdi-account-multiple</VIcon>
+            </VListItemIcon>
+            <VListItemContent>
+              <VListItemTitle>Players</VListItemTitle>
+            </VListItemContent>
+          </VListItem>
+          <VListItem
             link
             to="/games"
             v-hotkey:g
           >
-            <v-list-item-icon>
-              <v-icon>mdi-checkerboard</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Games</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-    </v-navigation-drawer>
+            <VListItemIcon>
+              <VIcon>mdi-checkerboard</VIcon>
+            </VListItemIcon>
+            <VListItemContent>
+              <VListItemTitle>Games</VListItemTitle>
+            </VListItemContent>
+          </VListItem>
+        </VList>
+    </VNavigationDrawer>
 </template>
 
 <script>
