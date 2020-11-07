@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import colors from 'vuetify/lib/util/colors';
+import VuetifyConfirm from 'vuetify-confirm';
 
 Vue.use(Vuetify);
 
-export default new Vuetify({
+const vuetify = new Vuetify({
   theme: {
     themes: {
       dark: {
@@ -13,3 +14,6 @@ export default new Vuetify({
     },
   },
 });
+Vue.use(VuetifyConfirm, { vuetify });
+
+export default vuetify;

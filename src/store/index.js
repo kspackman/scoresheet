@@ -35,6 +35,9 @@ export default new Vuex.Store({
     gamePlays(state) {
       return (game) => state.plays.filter((play) => play.gameId === game.id);
     },
+    activePlayers(state) {
+      return state.players.filter((player) => !player.deleted);
+    },
   },
   mutations: {
     initializeStore(state, newState) {
@@ -43,19 +46,20 @@ export default new Vuex.Store({
     addPlayer(state, player) {
       state.players.push(player);
     },
-    deletePlayer(state, player) {
-      const index = state.players.indexOf(player);
-      if (index >= 0) {
-        state.players.splice(index, 1);
+    deletePlayer(state, playerId) {
+      const foundPlayer = state.players.find((player) => player.id === playerId);
+      if (foundPlayer) {
+        Vue.set(foundPlayer, 'deleted', true);
       }
     },
     addGame(state, game) {
       state.games.push(game);
     },
-    deleteGame(state, game) {
-      const index = state.games.indexOf(game);
+    deleteGame(state, gameId) {
+      const index = state.games.findIndex((game) => game.id === gameId);
       if (index >= 0) {
         state.games.splice(index, 1);
+        state.plays = state.plays.filter((play) => play.gameId !== gameId);
       }
     },
     savePlay(state, play) {

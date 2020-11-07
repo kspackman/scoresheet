@@ -92,8 +92,10 @@ export default {
         ...game,
       });
     },
-    deleteGame(game) {
-      this.$store.commit('deleteGame', game);
+    async deleteGame(game) {
+      if (await this.$confirm(`Are you sure you want to delete ${game.name}?<br>All associated plays will also be deleted.`)) {
+        this.$store.commit('deleteGame', game.id);
+      }
     },
     createPlay(game) {
       this.selectedGame = game;

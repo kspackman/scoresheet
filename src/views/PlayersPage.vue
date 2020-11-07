@@ -45,9 +45,9 @@ export default {
     PageHeader,
   },
   computed: {
-    ...mapGetters(['nextPlayerId']),
+    ...mapGetters(['activePlayers', 'nextPlayerId']),
     players() {
-      return this.$store.state.players
+      return this.activePlayers
         .map((player) => {
           let plays = this.$store.getters.playerPlays(player) || [];
           plays = [...plays].sort((a, b) => a.date - b.date);
@@ -66,8 +66,10 @@ export default {
         name,
       });
     },
-    deletePlayer(player) {
-      this.$store.commit('deletePlayer', player);
+    async deletePlayer(player) {
+      if (await this.$confirm(`Are you sure you want to delete ${player.name}?`)) {
+        this.$store.commit('deletePlayer', player.id);
+      }
     },
   },
 };
