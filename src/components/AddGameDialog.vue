@@ -51,6 +51,10 @@
           >
             <VIcon>mdi-plus</VIcon>
           </VBtn>
+          <VCheckbox
+            v-model="lowScoreWins"
+            label="Low score wins"
+          />
           <VCard-actions class="justify-end">
             <VBtn
               text
@@ -85,6 +89,7 @@ export default {
         (v) => (v && v.length <= 30) || 'Name must be less than 30 characters',
       ],
       rounds: [{ name: 'Points' }],
+      lowScoreWins: false,
       open: false,
     };
   },
@@ -104,7 +109,7 @@ export default {
       }
     },
     addGame() {
-      this.$emit('add-game', { name: this.name, rounds: this.rounds });
+      this.$emit('add-game', { name: this.name, rounds: this.rounds, lowScoreWins: this.lowScoreWins });
       this.closeDialog();
     },
     openDialog() {

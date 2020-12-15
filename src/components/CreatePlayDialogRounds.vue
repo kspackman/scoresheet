@@ -15,24 +15,35 @@
           </thead>
           <tbody>
             <tr
-              v-for="(round, index) in game.rounds"
+              v-for="(round, roundIndex) in game.rounds"
               :key="round.name"
             >
               <th>
                 {{ round.name }}
               </th>
               <td
-                v-for="player in selectedPlayers"
+                v-for="(player, playerIndex) in selectedPlayers"
                 :key="player.id"
                 class="input-td"
               >
                 <div>
                   <VTextField
-                    v-model.number="playerScores[player.id][index]"
+                    v-model.number="playerScores[playerIndex].scores[roundIndex]"
                     type="number"
                     dense
+                    @input="calculateTotal(playerScores[playerIndex])"
                   />
                 </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <td
+                v-for="(player, index) in selectedPlayers"
+                :key="player.id"
+                class="input-td"
+              >
+                {{ playerScores[index].total }}
               </td>
             </tr>
           </tbody>
@@ -71,7 +82,7 @@ export default {
   },
   data() {
     return {
-      playerScores: {},
+      playerScores: [],
     };
   },
   computed: {
@@ -82,13 +93,21 @@ export default {
     ...mapState(['players']),
   },
   created() {
-    this.playerScores = {};
+    this.playerScores = [];
     console.log(this.game.rounds.length - 1);
-    this.playInfo.playerIds.forEach((playerId) => {
-      this.playerScores[playerId] = new Array(this.game.rounds.length).fill(0);
+    this.playInfo.playerIds.forEach((playerId, index) => {
+      this.$set(this.playerScores, index, {
+        playerId,
+        scores: new Array(this.game.rounds.length).fill(0),
+        total: 0,
+      });
     });
   },
   methods: {
+    calculateTotal(playerScores) {
+      // eslint-disable-next-line no-param-reassign
+      playerScores.total = playerScores.scores.reduce((acc, curr) => acc + curr);
+    },
     cancel() {
       this.$emit('cancel');
     },

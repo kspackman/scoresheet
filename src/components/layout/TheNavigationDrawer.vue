@@ -24,6 +24,7 @@
           <VListItem
             link
             to="/players"
+            exact
             v-hotkey:p
           >
             <VListItemIcon>
@@ -36,6 +37,7 @@
           <VListItem
             link
             to="/games"
+            exact
             v-hotkey:g
           >
             <VListItemIcon>

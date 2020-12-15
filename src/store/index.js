@@ -26,17 +26,19 @@ export default new Vuex.Store({
       return nextId(state.plays);
     },
     playerPlays(state) {
-      return (player) => {
-        console.log(player);
-        return state.plays
-          .filter((play) => Object.keys(play.players).includes(Number(player.id).toString()));
-      };
+      return (playerId) => state.plays
+        .filter((play) => play.players.some((player) => player.playerId === playerId))
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
     },
     gamePlays(state) {
-      return (game) => state.plays.filter((play) => play.gameId === game.id);
+      return (game) => state.plays.filter((play) => play.gameId === game.id)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
     },
     activePlayers(state) {
       return state.players.filter((player) => !player.deleted);
+    },
+    player(state) {
+      return (id) => state.players.find((player) => player.id === id);
     },
   },
   mutations: {

@@ -4,7 +4,10 @@
     <VList class="d-inline-block" style="min-width:300px;">
       <VDivider />
       <template v-for="(player, index) in players">
-        <VListItem :key="'p' + player.id">
+        <VListItem
+          :key="'p' + player.id"
+          :to="'players/' + player.id"
+        >
           <VListItemIcon>
             <VIcon>mdi-account</VIcon>
           </VListItemIcon>
@@ -49,8 +52,7 @@ export default {
     players() {
       return this.activePlayers
         .map((player) => {
-          let plays = this.$store.getters.playerPlays(player) || [];
-          plays = [...plays].sort((a, b) => a.date - b.date);
+          const plays = this.$store.getters.playerPlays(player.id) || [];
           return {
             ...player,
             numberPlays: plays.length,

@@ -68,10 +68,16 @@ export default {
       this.mode = Modes.ROUNDS;
     },
     createPlay(playerScores) {
+      const totals = playerScores.map((playerScore) => playerScore.total);
+      const winningScore = this.game.lowScoreWins ? Math.min(...totals) : Math.max(...totals);
+      const winners = playerScores
+        .filter((playerScore) => playerScore.total === winningScore)
+        .map((playerScore) => playerScore.playerId);
       this.$emit('create-play', {
         id: this.nextPlayId,
         gameId: this.game.id,
         players: playerScores,
+        winners,
         date: new Date(),
       });
       this.closeDialog();

@@ -74,8 +74,7 @@ export default {
     games() {
       let { games } = this.$store.state;
       games = games.map((game) => {
-        let plays = this.$store.getters.gamePlays(game) || [];
-        plays = [...plays].sort((a, b) => a.date - b.date);
+        const plays = this.$store.getters.gamePlays(game) || [];
         return {
           ...game,
           numberPlays: plays.length,
