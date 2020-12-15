@@ -40,6 +40,9 @@ export default new Vuex.Store({
     player(state) {
       return (id) => state.players.find((player) => player.id === id);
     },
+    gameName(state) {
+      return (id) => state.games.find((game) => game.id === id)?.name;
+    },
   },
   mutations: {
     initializeStore(state, newState) {

@@ -1,7 +1,7 @@
 <template>
   <div class="players d-flex flex-column align-center mt-3">
     <PageHeader>{{ player.name }}</PageHeader>
-    <VRow>
+    <VRow class="pb-3">
       <DataPoint class="player-stat">
         <template v-slot:label>Plays</template>
         {{ playerPlays.length }}
@@ -15,6 +15,29 @@
         {{ winRate }}
       </DataPoint>
     </VRow>
+    <VSimpleTable>
+      <thead>
+        <tr>
+          <th>Game</th>
+          <th>Plays</th>
+          <th>Wins</th>
+          <th>Win rate</th>
+          <th>Expected win rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="summary in gameSummaries"
+          :key="summary.id"
+        >
+          <td>{{ summary.name }}</td>
+          <td>{{ summary.plays }}</td>
+          <td>{{ summary.wins }}</td>
+          <td>{{ summary.winRate }}</td>
+          <td>{{ summary.expectedWinRate }}</td>
+        </tr>
+      </tbody>
+    </VSimpleTable>
   </div>
 </template>
 
@@ -42,11 +65,51 @@ export default {
       return new Set(this.playerPlays.map((play) => play.gameId)).size;
     },
     winRate() {
-      const wonPlays = this.playerPlays.filter((play) => play.winners
-        .some((winner) => winner === this.playerId));
+      const wonPlays = this.$_getWins(this.playerPlays);
       return this.playerPlays.length > 0
-        ? `${(wonPlays.length / this.playerPlays.length) * 100}%`
+        ? `${this.$_toPercent(wonPlays.length / this.playerPlays.length)}%`
         : '0%';
+    },
+    gameMap() {
+      const gameMap = new Map();
+      this.playerPlays.forEach((play) => {
+        const entry = gameMap.get(play.gameId);
+        if (!entry) {
+          gameMap.set(play.gameId, [play]);
+        } else {
+          entry.push(play);
+        }
+      });
+      return gameMap;
+    },
+    gameSummaries() {
+      const gameSummaries = [];
+
+      this.gameMap.forEach((playArray, gameId) => {
+        const wonPlays = this.$_getWins(playArray);
+        const sum = playArray
+          .map((play) => 1 / play.players.length)
+          .reduce((acc, curr) => acc + curr);
+        const expectedWinRate = sum / playArray.length;
+        gameSummaries.push({
+          id: gameId,
+          name: this.$store.getters.gameName(gameId),
+          plays: playArray.length,
+          wins: wonPlays.length,
+          winRate: `${this.$_toPercent(wonPlays.length / playArray.length)}%`,
+          expectedWinRate: `${this.$_toPercent(expectedWinRate)}%`,
+        });
+      });
+
+      return gameSummaries;
+    },
+  },
+  methods: {
+    $_getWins(playArray) {
+      return playArray.filter((play) => play.winners.some((winner) => winner === this.playerId));
+    },
+    $_toPercent(value) {
+      return (value * 100).toFixed(2);
     },
   },
 };
