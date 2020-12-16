@@ -1,21 +1,21 @@
 <template>
   <div class="players d-flex flex-column align-center mt-3">
     <PageHeader>{{ player.name }}</PageHeader>
-    <VRow class="pb-3">
-      <DataPoint class="player-stat">
+    <VRow class="mb-3">
+      <DataPoint class="mx-4">
         <template v-slot:label>Plays</template>
         {{ playerPlays.length }}
       </DataPoint>
-      <DataPoint class="player-stat">
+      <DataPoint class="mx-4">
         <template v-slot:label>Games</template>
         {{ totalGames }}
       </DataPoint>
-      <DataPoint class="player-stat">
+      <DataPoint class="mx-4">
         <template v-slot:label>Win Rate</template>
         {{ winRate }}
       </DataPoint>
     </VRow>
-    <VSimpleTable>
+    <VSimpleTable class="mb-3">
       <thead>
         <tr>
           <th>Game</th>
@@ -38,11 +38,15 @@
         </tr>
       </tbody>
     </VSimpleTable>
+    <Chart :key="chartKey" :options="gameChartOptions" />
   </div>
 </template>
 
 <script>
 import PageHeader from '@/components/generic/PageHeader.vue';
+import { Chart } from 'highcharts-vue';
+import { mapState } from 'vuex';
+import { setDarkMode, setLightMode } from '../assets/highchartsUtils';
 import DataPoint from '../components/generic/DataPoint.vue';
 
 export default {
@@ -50,6 +54,12 @@ export default {
   components: {
     PageHeader,
     DataPoint,
+    Chart,
+  },
+  data() {
+    return {
+      chartKey: 0,
+    };
   },
   computed: {
     playerId() {
@@ -103,6 +113,63 @@ export default {
 
       return gameSummaries;
     },
+    gameChartOptions() {
+      const seriesData = [];
+      this.gameMap.forEach((playArray, gameId) => {
+        seriesData.push({
+          name: this.$store.getters.gameName(gameId),
+          y: playArray.length,
+        });
+      });
+      return {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie',
+        },
+        title: {
+          text: 'Games played',
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>',
+        },
+        accessibility: {
+          point: {
+            valueSuffix: '%',
+          },
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.2f} %',
+            },
+          },
+        },
+        series: [{
+          name: 'Games',
+          colorByPoint: true,
+          data: seriesData,
+        }],
+      };
+    },
+    ...mapState(['darkMode']),
+  },
+  watch: {
+    darkMode: {
+      handler(val) {
+        if (val) {
+          setDarkMode();
+        } else {
+          setLightMode();
+        }
+        this.chartKey += 1;
+      },
+      immediate: true,
+    },
   },
   methods: {
     $_getWins(playArray) {
@@ -114,9 +181,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-  .player-stat {
-    margin: 0 16px;
-  }
-</style>
